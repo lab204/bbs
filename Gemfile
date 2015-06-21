@@ -26,7 +26,6 @@ gem 'ruby-prof'
 
 # 上传组件
 gem 'carrierwave', '~> 0.10.0'
-gem 'carrierwave-upyun', '0.1.8'
 gem 'mini_magick','3.7.0', require: false
 
 # Mongoid 辅助插件

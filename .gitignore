@@ -31,3 +31,5 @@ tags
 chromedriver.log
 .idea/
 .ruby-version
+dump.rdb
+public/photo/
