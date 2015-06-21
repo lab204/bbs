@@ -13,9 +13,9 @@ class Ability
       can :manage, :all
     elsif user.has_role?(:member)
       # Topic
-      if !user.newbie?
-        can :create, Topic
-      end
+      #if !user.newbie?
+      can :create, Topic
+      #end
       can :favorite, Topic
       can :unfavorite, Topic
       can :follow, Topic
@@ -29,11 +29,12 @@ class Ability
 
       # Reply
       # 新手用户晚上禁止回帖，防 spam，可在面板设置是否打开
-      if !(user.newbie? &&
-           (SiteConfig.reject_newbie_reply_in_the_evening == 'true') &&
-           (Time.zone.now.hour < 9 || Time.zone.now.hour > 22))
-        can :create, Reply
-      end
+      # if !(user.newbie? &&
+      #      (SiteConfig.reject_newbie_reply_in_the_evening == 'true') &&
+      #      (Time.zone.now.hour < 9 || Time.zone.now.hour > 22))
+      #   can :create, Reply
+      # end
+      can :create, Reply
       can :update, Reply do |reply|
         reply.user_id == user.id
       end
