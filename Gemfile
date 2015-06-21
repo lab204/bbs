@@ -1,8 +1,8 @@
 # coding: utf-8
-if ENV['USE_OFFICIAL_GEM_SOURCE']
-  source 'https://rubygems.org'
-else
+if ENV['USE_TAOBAO_GEM_SOURCE']
   source 'https://ruby.taobao.org'
+else
+  source 'https://rubygems.org'
 end
 
 gem 'rails', '~> 4.2.2'
@@ -111,8 +111,10 @@ gem 'rack-mini-profiler', require: false
 gem 'oneapm_rpm'
 
 group :development, :test do
-  gem 'capistrano', '2.9.0', require: false
-  gem 'rvm-capistrano', require: false
+  gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
   gem 'capistrano-sidekiq'
   gem 'rspec-rails', '~> 3.1'
   gem 'factory_girl_rails', '1.4.0'
