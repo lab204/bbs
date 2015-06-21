@@ -2,7 +2,7 @@
 
 
 <div class="home_suggest_topics panel panel-default">
-  <div class="panel-heading">社区精华帖</div>
+  <div class="panel-heading">最新回复</div>
   <div class="panel-body topics row">
     <%
       odd_topics, even_topics = @excellent_topics.partition.each_with_index { |t, i| i.odd?  }
@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="panel-footer">
-    <%= link_to "查看更多精华帖...", excellent_topics_path %>
+    <%= link_to "查看更多...", topics_path %>
   </div>
 </div>
 
