@@ -25,7 +25,7 @@
 
 
         <%= raw SiteConfig.after_topic_html %>
-        <%= social_share_button_tag h("#{@topic.title} via: @#{Setting.twitter_id} ") %>
+        <%= social_share_button_tag h("#{@topic.title}") %>
       </div>
 
       <% if @topic.excellent? %>
