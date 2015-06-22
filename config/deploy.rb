@@ -1,64 +1,53 @@
-# coding: utf-8
-require "bundler/capistrano"
-require 'capistrano/sidekiq'
-require "rvm/capistrano"
-require 'puma/capistrano'
+# config valid only for current version of Capistrano
+lock '3.4.0'
 
-default_run_options[:pty] = true
+set :application, 'lab204'
+set :repo_url, 'git@github.com:lab204/bbs.git'
 
-set :rvm_ruby_string, 'ruby-2.2.2'
-set :rvm_type, :user
-set :application, "ruby-china"
-set :repository,  "git://github.com/ruby-china/ruby-china.git"
-set :branch, "master"
+# Default branch is :master
+# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+
+# Default deploy_to directory is /var/www/my_app_name
+set :deploy_to, '/home/deploy/apps/lab204'
+
+# Default value for :scm is :git
 set :scm, :git
-set :user, "ruby"
-set :deploy_to, "/data/www/#{application}"
-set :runner, "ruby"
-# set :deploy_via, :remote_cache
-set :git_shallow_clone, 1
-set :puma_role, :app
-set :puma_config_file, "config/puma.rb"
 
-role :web, "ruby-china.org"                          # Your HTTP server, Apache/etc
-role :app, "ruby-china.org"                          # This may be the same as your `Web` server
-role :db,  "ruby-china.org", primary: true # This is where Rails migrations will run
-role :queue, "ruby-china.org"
+set :rvm_type, :user
+set :rvm_ruby_version, '2.2.2'
 
-namespace :sidekiq do
-  task :quiet, roles: :queue do
-   run "cd #{deploy_to}/current/; bundle exec sidekiqctl quiet tmp/pids/sidekiq.pid"
+
+# Default value for :format is :pretty
+# set :format, :pretty
+
+# Default value for :log_level is :debug
+# set :log_level, :debug
+
+# Default value for :pty is false
+set :pty, true
+
+# Default value for :linked_files is []
+set :linked_files, fetch(:linked_files, []).push('config/config.yml', 'config/mongoid.yml', 'config/redis.yml', 'config/secrets.yml')
+
+# Default value for linked_dirs is []
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+
+# Default value for keep_releases is 5
+# set :keep_releases, 5
+
+
+namespace :deploy do
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
   end
 
-  task :stop, roles: :queue do
-   run "cd #{deploy_to}/current/; bundle exec sidekiqctl stop tmp/pids/sidekiq.pid 60"
-  end
 end
-
-task :init_shared_path, roles: :web do
-  run "mkdir -p #{deploy_to}/shared/log"
-  run "mkdir -p #{deploy_to}/shared/pids"
-  run "mkdir -p #{deploy_to}/shared/assets"
-end
-
-task :link_shared_files, roles: :web do
-  run "ln -sf #{shared_path}/assets #{deploy_to}/current/public/assets"
-  run "ln -sf #{deploy_to}/shared/config/*.yml #{deploy_to}/current/config/"
-  run "ln -sf #{deploy_to}/shared/config/initializers/secret_token.rb #{deploy_to}/current/config/initializers"
-  run "ln -sf #{shared_path}/pids #{deploy_to}/current/tmp/"
-end
-
-task :mongoid_create_indexes, roles: :web do
-  run "cd #{deploy_to}/current/; RAILS_ENV=production bundle exec rake db:mongoid:create_indexes"
-end
-
-task :compile_assets, roles: :web do
-  run "cd #{deploy_to}/current/; RAILS_ENV=production bundle exec rake assets:precompile"
-  run "cd #{deploy_to}/current/; RAILS_ENV=production bundle exec rake assets:cdn"
-end
-
-task :mongoid_migrate_database, roles: :web do
-  run "cd #{deploy_to}/current/; RAILS_ENV=production bundle exec rake db:migrate"
-end
-
-after "deploy:finalize_update","deploy:symlink", :init_shared_path, :link_shared_files, :mongoid_migrate_database , :compile_assets

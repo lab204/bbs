@@ -33,3 +33,4 @@ chromedriver.log
 .ruby-version
 dump.rdb
 public/photo/
+public/user/

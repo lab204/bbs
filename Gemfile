@@ -115,6 +115,7 @@ group :development, :test do
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
+  gem 'capistrano3-puma'
   gem 'capistrano-sidekiq'
   gem 'rspec-rails', '~> 3.1'
   gem 'factory_girl_rails', '1.4.0'
