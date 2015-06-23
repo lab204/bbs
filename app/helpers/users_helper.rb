@@ -39,7 +39,7 @@ module UsersHelper
     end
   end
 
-  def user_avatar_tag(user, size = :normal, opts = {})
+  def user_avatar_tag(user, size = :normal, opts = {}, default= "404")
     link = opts[:link] || true
 
     width = user_avatar_width_for_size(size)
@@ -52,7 +52,7 @@ module UsersHelper
 
     if user[:avatar].blank?
       default_url = asset_path("avatar/#{size}.png")
-      img_src = "#{Setting.gravatar_proxy}/avatar/#{user.email_md5}.png?s=#{width * 2}&d=404"
+      img_src = "#{Setting.gravatar_proxy}/avatar/#{user.email_md5}.png?s=#{width * 2}&d=" + default
       img = image_tag(img_src, class: img_class)
     else
       img = image_tag(user.avatar.url(user_avatar_size_name_for_2x(size)), class: img_class)
