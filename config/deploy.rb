@@ -27,10 +27,10 @@ set :rvm_ruby_version, '2.2.2'
 set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, fetch(:linked_files, []).push('config/config.yml', 'config/mongoid.yml', 'config/redis.yml', 'config/secrets.yml')
+set :linked_files, fetch(:linked_files, []).push('config/config.yml', 'config/mongoid.yml', 'config/redis.yml', 'config/secrets.yml', "favicon.ico")
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/photo')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/photo', "public/user", "public/uploads")
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
