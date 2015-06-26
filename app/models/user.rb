@@ -330,7 +330,7 @@ class User
   # 只是把用户信息修改了
   def soft_delete
     # assuming you have deleted_at column added already
-    self.email = "#{self.login}_#{self.id}@ruby-china.org"
+    self.email = "#{self.login}_#{self.id}@lab204.org"
     self.login = "Guest"
     self.bio = ""
     self.website = ""
