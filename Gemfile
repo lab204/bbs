@@ -1,9 +1,5 @@
 # coding: utf-8
-if ENV['USE_TAOBAO_GEM_SOURCE']
-  source 'https://ruby.taobao.org'
-else
-  source 'https://rubygems.org'
-end
+source 'https://ruby.taobao.org'
 
 gem 'rails', '~> 4.2.2'
 gem 'sass-rails'
