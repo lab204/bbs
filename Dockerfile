@@ -6,9 +6,7 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ENV LANG en_US.UTF-8
 RUN mkdir -p /usr/src/app
 
-ENV USE_TAOBAO_GEM_SOURCE true
-
-RUN apt-get update && apt-get install --force-yes -y nodejs 
+RUN apt-get update && apt-get install --force-yes -y memcached magemagick
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
