@@ -1,12 +1,12 @@
 db:
-  image: daocloud.io/dao-mongodb
+  image: mongo:3.1.6
   environment:
     - AUTH=no
   ports:
     - "27017"
 
 redis:
-  image: redis
+  image: redis:3.0.3
   environment:
     - REDIS_PASS=none
   ports:
